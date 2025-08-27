@@ -1,87 +1,65 @@
 # 🚀 Instrucciones de Despliegue - Portafolio
 
-## 📋 Checklist Pre-Despliegue
+## 📋 Configuración Actual: ismaelhda.dev
 
-- [x] ✅ Astro configurado correctamente
-- [x] ✅ GitHub Actions configurado
-- [x] ✅ Build exitoso (sin errores críticos)
+- [x] ✅ Dominio configurado: `ismaelhda.dev`
 - [x] ✅ CNAME configurado
-- [x] ✅ README actualizado
+- [x] ✅ Astro config actualizado
+- [x] ✅ GitHub Actions listo
 
-## 🌐 Opción 1: Solo GitHub Pages (Subdominio)
+## 🌍 Despliegue con Dominio Personalizado (ismaelhda.dev)
 
-### Configuración en `astro.config.mjs`:
-```javascript
-export default defineConfig({
-  site: 'https://ismaeldelangel550.github.io',
-  base: '/Portafolio', // ← DESCOMENTAR esta línea
-  output: 'static'
-});
-```
+### 1. 💰 Comprar el dominio en Porkbun:
+- Ve a: https://porkbun.com
+- Busca: `ismaelhda.dev`
+- Completa la compra
 
-### URL Final:
-- `https://ismaeldelangel550.github.io/Portafolio`
+### 2. ⚙️ Configurar DNS en Porkbun:
 
-### Pasos:
-1. Descomentar la línea `base: '/Portafolio'` en astro.config.mjs
-2. Eliminar el archivo `public/CNAME` 
-3. Push al repositorio
-4. Activar GitHub Pages en Settings → Pages
-
----
-
-## 🌍 Opción 2: Dominio Personalizado (Porkbun)
-
-### Configuración en `astro.config.mjs`:
-```javascript
-export default defineConfig({
-  site: 'https://tu-dominio.com', // ← TU DOMINIO AQUÍ
-  // base: '/Portafolio', // ← COMENTAR esta línea
-  output: 'static'
-});
-```
-
-### Configuración DNS en Porkbun:
+**Registros A (para el dominio raíz @):**
 ```
 Tipo: A
 Nombre: @
 Valor: 185.199.108.153
 TTL: 300
 
-Tipo: A  
+Tipo: A
 Nombre: @
 Valor: 185.199.109.153
 TTL: 300
 
 Tipo: A
 Nombre: @
-Valor: 185.199.110.153  
+Valor: 185.199.110.153
 TTL: 300
 
 Tipo: A
 Nombre: @
 Valor: 185.199.111.153
 TTL: 300
+```
 
+**Registro CNAME (para www):**
+```
 Tipo: CNAME
 Nombre: www
 Valor: ismaeldelangel550.github.io
 TTL: 300
 ```
 
-### Archivo `public/CNAME`:
-```
-tu-dominio.com
-```
+### 3. 🔧 Configurar GitHub Pages:
+1. Ve a: https://github.com/IsmaelDelAngel550/Portafolio/settings/pages
+2. En "Custom domain" ingresa: `ismaelhda.dev`
+3. Habilita "Enforce HTTPS" (después de que se verifique el dominio)
 
-### Pasos:
-1. Comprar dominio en Porkbun
-2. Actualizar `astro.config.mjs` con tu dominio
-3. Actualizar `public/CNAME` con tu dominio
-4. Configurar DNS en Porkbun (registros A y CNAME)
-5. Push al repositorio
-6. En GitHub → Settings → Pages → Custom domain → Ingresar tu dominio
-7. Esperar propagación DNS (1-24 horas)
+### 4. ⏱️ Esperar propagación DNS:
+- Tiempo: 1-24 horas (normalmente 1-2 horas)
+- Verificar en: https://dnschecker.org/
+- Buscar: `ismaelhda.dev`
+
+### 5. 🚀 ¡Tu sitio estará disponible en!:
+- **https://ismaelhda.dev** (dominio principal)
+- **https://www.ismaelhda.dev** (con www)
 
 ---
 
