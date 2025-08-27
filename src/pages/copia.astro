@@ -1,0 +1,93 @@
+---
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Portafolio profesional de José Ismael Hernández Del Angel, Ingeniero en Sistemas Computacionales de Tampico, Tamaulipas." />
+		<meta name="keywords" content="José Ismael Hernández Del Angel, desarrollador, ingeniero, sistemas computacionales, Tampico, Java, Python, C++, PHP, Laravel, React, Astro, Vue" />
+		<meta name="author" content="José Ismael Hernández Del Angel" />
+		<title>José Ismael Hernández | Portafolio</title>
+		<style is:global>
+			:root {
+				--primary-color: #6A5ACD; /* Morado-azul */
+				--secondary-color: #8A2BE2; /* Violeta */
+				--tertiary-color: #483D8B; /* Azul pizarra oscuro */
+				--background-color: #121212; /* Fondo oscuro */
+				--text-color: #F8F8FF; /* Blanco fantasma */
+				--accent-color: #9370DB; /* Morado medio */
+			}
+			
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			
+			body {
+				font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+				background-color: var(--background-color);
+				color: var(--text-color);
+				line-height: 1.6;
+			}
+			
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+			}
+			
+			section {
+				padding: 5rem 0;
+			}
+			
+			a {
+				color: var(--accent-color);
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+			
+			a:hover {
+				color: var(--secondary-color);
+			}
+			
+			.section-title {
+				font-size: 2.5rem;
+				margin-bottom: 2rem;
+				text-align: center;
+				color: var(--primary-color);
+			}
+			
+			@media (max-width: 768px) {
+				.section-title {
+					font-size: 2rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		
+		<main>
+			<Hero />
+			<About />
+			<Experience />
+			<Skills />
+			<Contact />
+		</main>
+		
+		<footer class="container">
+			<p>© {new Date().getFullYear()} José Ismael Hernández Del Angel. Todos los derechos reservados.</p>
+		</footer>
+	</body>
+</html>

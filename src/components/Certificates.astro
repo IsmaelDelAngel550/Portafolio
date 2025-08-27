@@ -1,0 +1,346 @@
+---
+---
+
+<section id="certificados" class="certificates">
+  <div class="container">
+    <h2 class="section-title">Cursos & Certificaciones</h2>
+    <p class="section-subtitle">Aprendizaje continuo para desarrollo profesional</p>
+    
+    <div class="certificates-carousel">
+      <div class="certificate-card">
+        <div class="certificate-front">
+          <div class="certificate-image">
+            <img src="/images/cursos/Analisis-datos-google.png" alt="Certificación de Análisis de Datos de Google" />
+          </div>
+          <div class="certificate-overlay">
+            <h3>Analista de Datos</h3>
+            <span class="issuer">Google</span>
+          </div>
+        </div>
+        <div class="certificate-back">
+          <h4>Analista de Datos</h4>
+          <span class="date">2023</span>
+          <p>
+            Certificación en análisis de datos que cubre herramientas analíticas, 
+            limpieza de datos, visualización y análisis estadístico.
+          </p>
+          <div class="certificate-skills">
+            <span>SQL</span>
+            <span>Visualización</span>
+            <span>Análisis</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="certificate-card">
+        <div class="certificate-front">
+          <div class="certificate-image">
+            <img src="/images/cursos/Desarrollo-backend-aprende.org.png" alt="Curso de Desarrollo Backend" />
+          </div>
+          <div class="certificate-overlay">
+            <h3>Desarrollo Backend</h3>
+            <span class="issuer">Aprende.org</span>
+          </div>
+        </div>
+        <div class="certificate-back">
+          <h4>Desarrollo Backend</h4>
+          <span class="date">2022 - 2023</span>
+          <p>
+            Formación completa en desarrollo backend, APIs, bases de datos y 
+            arquitectura de servidores para aplicaciones web modernas.
+          </p>
+          <div class="certificate-skills">
+            <span>Node.js</span>
+            <span>Bases de Datos</span>
+            <span>APIs</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="certificate-card">
+        <div class="certificate-front">
+          <div class="certificate-image">
+            <img src="/images/cursos/Apps-moviles-microsoft.png" alt="Curso de Desarrollo de Aplicaciones Móviles" />
+          </div>
+          <div class="certificate-overlay">
+            <h3>Apps Móviles</h3>
+            <span class="issuer">Microsoft</span>
+          </div>
+        </div>
+        <div class="certificate-back">
+          <h4>Desarrollo de Apps Móviles</h4>
+          <span class="date">2023</span>
+          <p>
+            Curso especializado en el desarrollo de aplicaciones móviles 
+            multiplataforma, interfaces de usuario y experiencia de usuario.
+          </p>
+          <div class="certificate-skills">
+            <span>React Native</span>
+            <span>UI/UX</span>
+            <span>JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .certificates {
+    background-color: var(--background-color);
+    position: relative;
+    padding: 5rem 0;
+    overflow: hidden;
+  }
+  
+  .certificates::before {
+    content: "";
+    position: absolute;
+    top: -150px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(106, 90, 205, 0.2) 0%, rgba(106, 90, 205, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .certificates::after {
+    content: "";
+    position: absolute;
+    bottom: -150px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, rgba(138, 43, 226, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .certificates-carousel {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .certificate-card {
+    width: 300px;
+    height: 360px;
+    perspective: 1000px;
+    position: relative;
+  }
+
+  .certificate-front,
+  .certificate-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .certificate-front {
+    background-color: rgba(106, 90, 205, 0.1);
+    transform: rotateY(0deg);
+  }
+
+  .certificate-back {
+    background: linear-gradient(145deg, rgba(74, 59, 145, 0.2), rgba(106, 90, 205, 0.2));
+    transform: rotateY(180deg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(106, 90, 205, 0.3);
+  }
+
+  .certificate-card:hover .certificate-front {
+    transform: rotateY(180deg);
+  }
+
+  .certificate-card:hover .certificate-back {
+    transform: rotateY(0deg);
+  }
+
+  .certificate-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .certificate-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .certificate-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.7) 60%, transparent);
+    color: white;
+    padding: 2rem 1.5rem;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .certificate-overlay h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .issuer {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .certificate-back h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  .certificate-back .date {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .certificate-back p {
+    color: rgba(248, 248, 255, 0.9);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .certificate-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: auto;
+  }
+
+  .certificate-skills span {
+    padding: 0.3rem 1rem;
+    background-color: rgba(106, 90, 205, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-color);
+  }
+
+  @keyframes floatAnimation {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .certificate-card {
+    animation: floatAnimation 4s ease-in-out infinite;
+  }
+  
+  .certificate-card:nth-child(2) {
+    animation-delay: 1s;
+  }
+  
+  .certificate-card:nth-child(3) {
+    animation-delay: 2s;
+  }
+
+  @media (max-width: 992px) {
+    .certificates-carousel {
+      gap: 1.5rem;
+    }
+    
+    .certificate-card {
+      width: 280px;
+      height: 340px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .certificate-card {
+      width: 260px;
+      height: 320px;
+    }
+    
+    .certificate-overlay h3 {
+      font-size: 1.2rem;
+    }
+    
+    .certificate-back h4 {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .certificates-carousel {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .certificate-card {
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 1rem;
+    }
+  }
+</style>
+
+<script>
+  // Hace que las tarjetas respondan al movimiento del ratón para crear un efecto 3D
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.certificate-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const angleX = (y - centerY) / 10;
+        const angleY = (centerX - x) / 10;
+        
+        card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `rotateX(0) rotateY(0)`;
+      });
+    });
+  });
+</script>
