@@ -321,6 +321,17 @@ import Education from "./Education.astro";
     .experience-content {
       padding: 1.2rem;
     }
+    
+    /* Mejorar espaciado para dispositivos móviles */
+    .section-container {
+      margin-bottom: 2rem;
+    }
+    
+    /* Mejorar espacio para el componente Education */
+    .experience-section + .education-section {
+      margin-top: 0;
+      padding-top: 0;
+    }
   }
   
   /* Animación de aparición para las tarjetas de experiencia */
@@ -373,5 +384,23 @@ import Education from "./Education.astro";
         card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
       });
     });
+    
+    // Detectar si estamos en móvil y ajustar los espacios entre secciones
+    const adjustMobileSpacing = () => {
+      const isMobile = window.innerWidth <= 768;
+      
+      if (isMobile) {
+        // Ajustar espacios entre las secciones en móvil
+        const educationSection = document.querySelector('.education-section');
+        if (educationSection) {
+          educationSection.style.marginTop = '2rem';
+          educationSection.style.paddingTop = '0';
+        }
+      }
+    };
+    
+    // Ejecutar al cargar y al cambiar el tamaño de la ventana
+    adjustMobileSpacing();
+    window.addEventListener('resize', adjustMobileSpacing);
   });
 </script>

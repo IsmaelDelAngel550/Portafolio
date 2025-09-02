@@ -238,6 +238,11 @@
     margin-top: 50px;
   }
   
+  /* Contenedor especial para mantener espacio consistente */
+  .mobile-view.education-cards {
+    height: 400px; /* Altura fija para evitar saltos */
+  }
+  
   .education-cards.desktop-view {
     position: relative;
     min-height: 350px;
@@ -338,7 +343,14 @@
     transform: translateX(-50%) !important;
     right: auto !important;
     margin: 0 auto !important;
-    position: relative !important;
+    position: absolute !important; /* Cambiado de relative a absolute */
+    top: 0 !important; /* Forzar la misma posición vertical */
+  }
+  
+  /* Contenedor para mantener espacio consistente */
+  .mobile-view .education-cards {
+    position: relative;
+    height: 350px; /* Altura fija para contener las tarjetas */
   }
   
   .education-icon-container {
@@ -361,6 +373,19 @@
   
   .education-content {
     flex: 1;
+  }
+  
+  /* Mejorar apariencia en móviles */
+  .mobile-view .education-content {
+    text-align: center;
+  }
+  
+  .mobile-view .education-icon-container {
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-view .tags {
+    justify-content: center;
   }
   
   .education-content .title {
@@ -616,6 +641,19 @@
       padding: 0.2rem 0.6rem;
       margin: 0.2rem;
     }
+    
+    /* Asegurar que las tarjetas estén centradas */
+    .education-cards.mobile-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Mejorar la visibilidad de las tarjetas activas */
+    .education-card.active {
+      box-shadow: 0 10px 30px rgba(106, 90, 205, 0.3);
+    }
   }
   
   /* Estilos específicos para dispositivos muy pequeños */
@@ -625,29 +663,58 @@
       max-width: 260px;
       padding: 0.8rem;
       margin: 0 auto !important;
-      position: relative !important; /* Forzar posición relativa */
+      position: absolute !important; /* Cambiado de relative a absolute */
       left: 50% !important; /* Centrar horizontalmente */
       right: auto !important;
       transform: translateX(-50%) !important; /* Asegurar centrado horizontal */
+      opacity: 0; /* Ocultar inicialmente */
+      visibility: hidden; /* Ocultar inicialmente */
+      top: 0 !important; /* Fijar posición vertical */
     }
     
     .education-section {
       padding: 0;
+      margin-top: 0;
     }
     
     .education-cards {
-      min-height: 520px;
+      min-height: 420px; /* Reducir altura mínima */
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
       padding: 0 5px; /* Reducir padding horizontal */
+      position: relative; /* Asegurar posicionamiento correcto */
     }
     
     .education-card.active {
       z-index: 5;
       left: 50% !important;
       transform: translateX(-50%) !important;
+      opacity: 1 !important; /* Mostrar cuando está activa */
+      visibility: visible !important; /* Mostrar cuando está activa */
+    }
+    
+    /* Mejorar espaciado y visualización en pantallas pequeñas */
+    .timeline-road {
+      height: 80px; /* Reducir altura */
+      margin-bottom: 30px; /* Reducir margen */
+    }
+    
+    .milestone-dot {
+      width: 24px; /* Reducir tamaño */
+      height: 24px; /* Reducir tamaño */
+    }
+    
+    .milestone-year {
+      font-size: 0.7rem;
+      padding: 3px 6px;
+      top: 35px; /* Ajustar posición */
+    }
+    
+    .section-category {
+      font-size: 1.4rem; /* Reducir tamaño */
+      margin: 1.5rem 0 1rem 0; /* Reducir margen */
     }
     
     .education-icon-container {
@@ -703,17 +770,22 @@
         if (isMobile) {
           // Configuración para móvil - asegurándonos que esté centrado
           activeCard.style.display = 'flex';
-          activeCard.style.position = 'relative';
+          activeCard.style.position = 'absolute'; // Cambiado de relative a absolute
           activeCard.style.width = '90%';
           activeCard.style.maxWidth = '300px';
           activeCard.style.left = '50%';
           activeCard.style.right = 'auto';
           activeCard.style.transform = 'translateX(-50%)';
           activeCard.style.margin = '0 auto';
-          // Forzar centrado
+          activeCard.style.top = '0'; // Forzar la misma posición vertical
+          // Forzar centrado con doble verificación
           setTimeout(() => {
             activeCard.style.left = '50%';
             activeCard.style.transform = 'translateX(-50%)';
+            // Asegurar que la tarjeta está visible
+            activeCard.style.opacity = '1';
+            activeCard.style.visibility = 'visible';
+            activeCard.style.zIndex = '10';
           }, 50);
         } else {
           // Configuración para desktop
@@ -748,7 +820,22 @@
     // Añadir eventos de clic a los puntos de la línea de tiempo
     milestones.forEach((milestone, index) => {
       milestone.addEventListener('click', function() {
+        // Guardar la posición actual de la tarjeta activa para referencia
+        const currentActiveCard = document.querySelector('.education-card.active');
+        const currentTop = currentActiveCard ? currentActiveCard.getBoundingClientRect().top : 0;
+        
         showCard(index);
+        
+        // Si estamos en móvil, asegurar que la nueva tarjeta mantenga la misma posición visual
+        if (window.innerWidth <= 768) {
+          const newActiveCard = document.querySelector('.education-card.active');
+          if (newActiveCard) {
+            newActiveCard.style.position = 'absolute';
+            newActiveCard.style.top = '0';
+            newActiveCard.style.left = '50%';
+            newActiveCard.style.transform = 'translateX(-50%)';
+          }
+        }
         
         // Efecto visual mejorado al hacer clic
         this.classList.add('pulse');
@@ -806,6 +893,7 @@
     // Función para aplicar los estilos adecuados según el tamaño de la pantalla
     const adjustForScreenSize = () => {
       const isMobile = window.innerWidth <= 768;
+      const isVerySmall = window.innerWidth <= 360;
       
       // Establecemos la clase CSS para el contenedor principal
       const cardsContainer = document.querySelector('.education-cards');
@@ -816,13 +904,25 @@
           
           // Asegurar que las tarjetas activas estén centradas en móvil
           document.querySelectorAll('.education-card.active').forEach(card => {
-            card.style.position = 'relative';
+            card.style.position = 'absolute'; // Cambiado de relative a absolute
             card.style.left = '50%';
             card.style.right = 'auto';
             card.style.transform = 'translateX(-50%)';
             card.style.margin = '0 auto';
-            card.style.width = '90%';
-            card.style.maxWidth = '300px';
+            card.style.width = isVerySmall ? '85%' : '90%';
+            card.style.maxWidth = isVerySmall ? '260px' : '300px';
+            card.style.zIndex = '10';
+            card.style.top = '0'; // Fijar la posición vertical
+            
+            // Asegurar visibilidad
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+          });
+          
+          // Ocultar las tarjetas no activas
+          document.querySelectorAll('.education-card:not(.active)').forEach(card => {
+            card.style.opacity = '0';
+            card.style.visibility = 'hidden';
           });
         } else {
           cardsContainer.classList.add('desktop-view');
@@ -858,17 +958,29 @@
             // Determinar la dirección del swipe
             const diff = touchStartX - touchEndX;
             
-            // Si el swipe es significativo (más de 50px)
-            if (Math.abs(diff) > 50) {
+            // Si el swipe es significativo (más de 30px para hacerlo más sensible)
+            if (Math.abs(diff) > 30) {
               // Swipe izquierda (siguiente)
               if (diff > 0 && currentIndex < educationCards.length - 1) {
                 currentIndex++;
                 showCard(currentIndex);
+                
+                // Feedback visual
+                if (milestones[currentIndex]) {
+                  milestones[currentIndex].classList.add('pulse');
+                  setTimeout(() => milestones[currentIndex].classList.remove('pulse'), 500);
+                }
               }
               // Swipe derecha (anterior)
               else if (diff < 0 && currentIndex > 0) {
                 currentIndex--;
                 showCard(currentIndex);
+                
+                // Feedback visual
+                if (milestones[currentIndex]) {
+                  milestones[currentIndex].classList.add('pulse');
+                  setTimeout(() => milestones[currentIndex].classList.remove('pulse'), 500);
+                }
               }
             }
           };
@@ -916,17 +1028,33 @@
     // Asegurar que las tarjetas se muestren correctamente al cargar
     setTimeout(() => {
       const isMobile = window.innerWidth <= 768;
+      const isVerySmall = window.innerWidth <= 360;
+      
       if (isMobile) {
         // Forzar centrado en móviles
         const activeCard = educationCards[currentIndex];
         if (activeCard) {
-          activeCard.style.position = 'relative';
+          activeCard.style.position = 'absolute'; // Cambiado de relative a absolute
           activeCard.style.left = '50%';
           activeCard.style.right = 'auto';
           activeCard.style.transform = 'translateX(-50%)';
           activeCard.style.margin = '0 auto';
-          activeCard.style.width = '90%';
-          activeCard.style.maxWidth = '300px';
+          activeCard.style.width = isVerySmall ? '85%' : '90%';
+          activeCard.style.maxWidth = isVerySmall ? '260px' : '300px';
+          activeCard.style.zIndex = '10';
+          activeCard.style.top = '0'; // Fijar posición vertical
+          
+          // Asegurar visibilidad
+          activeCard.style.opacity = '1';
+          activeCard.style.visibility = 'visible';
+          
+          // Comprobar después de un pequeño retraso para asegurar que los estilos se aplican
+          setTimeout(() => {
+            if (activeCard.style.opacity !== '1' || activeCard.style.visibility !== 'visible') {
+              activeCard.style.opacity = '1';
+              activeCard.style.visibility = 'visible';
+            }
+          }, 300);
         }
       }
     }, 300);
