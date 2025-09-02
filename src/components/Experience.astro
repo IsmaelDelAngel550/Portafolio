@@ -546,11 +546,17 @@
     width: 70%;
     max-width: 700px;
     margin: 0 auto;
-    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
     visibility: hidden;
     pointer-events: none;
+    box-sizing: border-box;
+    
+    @media (max-width: 768px) {
+      position: relative;
+      transform: none !important;
+      padding: 1.5rem;
+    }
   }
   
   .education-card.active {
@@ -698,43 +704,170 @@
       left: 75%;
     }
     
+    .education-section {
+      margin-top: 4rem;
+      padding: 0 1rem;
+    }
+    
+    .education-cards {
+      position: relative;
+      min-height: 450px;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
     .education-card.left, .education-card.right {
-      left: 50%;
-      transform: translateX(-50%) translateY(20px) scale(0.95);
-      width: 90%;
+      position: relative;
+      left: 0;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      box-sizing: border-box;
+      opacity: 0;
+      visibility: hidden;
+      display: none;
     }
     
     .education-card.active {
-      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 90%;
+      margin: 0 auto;
     }
     
     .education-content .title {
       font-size: 1.3rem;
+    }
+    
+    .education-icon-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .education-content .tags {
+      justify-content: center;
     }
   }
   
   @media (max-width: 480px) {
     .timeline-road {
       height: 80px;
+      margin-bottom: 60px;
     }
     
     .milestone-dot {
       width: 20px;
       height: 20px;
-      top: 33px;
+    }
+    
+    .milestone-dot::before {
+      width: 8px;
+      height: 8px;
     }
     
     .milestone-year {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+      padding: 3px 6px;
+      top: 35px;
+      white-space: nowrap;
     }
     
-    .education-card {
+    .education-card.left, .education-card.right {
+      width: 90%;
+      max-width: 320px;
       padding: 1.2rem;
     }
     
+    .education-cards {
+      min-height: 480px;
+    }
+    
     .education-icon-container {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
+    }
+    
+    .education-content .title {
+      font-size: 1.1rem;
+    }
+    
+    .education-content .description {
+      font-size: 0.85rem;
+    }
+    
+    .education-content .tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      margin: 0.2rem;
+    }
+  }
+  
+  /* Estilos específicos para dispositivos muy pequeños */
+  @media (max-width: 360px) {
+    .education-card.left, .education-card.right {
+      width: 85%; /* Reducido para asegurar que quepa en la pantalla */
+      max-width: 260px;
+      padding: 0.8rem;
+      margin: 0 auto;
+      position: relative !important; /* Forzar posición relativa */
+      left: auto !important; /* Anular posicionamiento absoluto */
+      right: auto !important;
+      transform: none !important; /* Anular transformaciones */
+    }
+    
+    .education-section {
+      padding: 0;
+    }
+    
+    .education-cards {
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 0 5px; /* Reducir padding horizontal */
+    }
+    
+    .education-card.active {
+      z-index: 5;
+    }
+    
+    .education-icon-container {
+      width: 45px;
+      height: 45px;
+      margin-bottom: 1rem;
+    }
+    
+    .education-content .title {
+      font-size: 1rem;
+    }
+    
+    .education-content .description {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+    
+    .milestone-year {
+      font-size: 0.7rem;
+    }
+    
+    .tags {
+      flex-wrap: wrap;
+      gap: 0.3rem;
     }
   }
   
@@ -836,11 +969,42 @@
       // Ocultar todas las tarjetas primero
       educationCards.forEach(card => {
         card.classList.remove('active');
+        card.style.display = 'none';
+        card.style.opacity = '0';
+        card.style.visibility = 'hidden';
       });
       
       // Mostrar la tarjeta seleccionada
       if (educationCards[cardIndex]) {
-        educationCards[cardIndex].classList.add('active');
+        const activeCard = educationCards[cardIndex];
+        activeCard.classList.add('active');
+        activeCard.style.opacity = '1';
+        activeCard.style.visibility = 'visible';
+        activeCard.style.display = 'flex';
+        
+        // Ajustes específicos para móvil
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          const container = document.querySelector('.education-cards');
+          if (container) {
+            // Asegurar que la tarjeta activa sea visible completa
+            activeCard.style.position = 'relative';
+            activeCard.style.width = '90%';
+            activeCard.style.maxWidth = '300px';
+            activeCard.style.left = 'auto';
+            activeCard.style.right = 'auto';
+            activeCard.style.transform = 'none';
+          }
+        } else {
+          // Restaurar posición en desktop
+          if (activeCard.classList.contains('left')) {
+            activeCard.style.left = '0';
+            activeCard.style.right = 'auto';
+          } else {
+            activeCard.style.right = '0';
+            activeCard.style.left = 'auto';
+          }
+        }
       }
       
       // Actualizar el estado activo de los milestone-dots
@@ -907,5 +1071,97 @@
     // Ejecutar animación al cargar y al hacer scroll
     animateTimelineOnScroll();
     window.addEventListener('scroll', animateTimelineOnScroll);
+    
+    // Mejorar el desplazamiento en dispositivos móviles
+    let currentIndex = 0;
+    
+    // Función para aplicar los estilos adecuados según el tamaño de la pantalla
+    const adjustForScreenSize = () => {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        // Aplicar estilos específicos para móvil a todas las tarjetas
+        educationCards.forEach(card => {
+          card.style.position = 'relative';
+          card.style.width = '90%';
+          card.style.maxWidth = '300px';
+          card.style.left = 'auto';
+          card.style.right = 'auto';
+          card.style.transform = 'none';
+        });
+        
+        // Re-aplicar el active a la tarjeta actual
+        if (educationCards[currentIndex]) {
+          showCard(currentIndex);
+        }
+        
+        // Configurar swipe para móvil
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const timelineElement = document.querySelector('.education-timeline');
+        if (timelineElement) {
+          const handleSwipe = () => {
+            // Determinar la dirección del swipe
+            const diff = touchStartX - touchEndX;
+            
+            // Si el swipe es significativo (más de 50px)
+            if (Math.abs(diff) > 50) {
+              // Swipe izquierda (siguiente)
+              if (diff > 0 && currentIndex < educationCards.length - 1) {
+                currentIndex++;
+                showCard(currentIndex);
+              }
+              // Swipe derecha (anterior)
+              else if (diff < 0 && currentIndex > 0) {
+                currentIndex--;
+                showCard(currentIndex);
+              }
+            }
+          };
+          
+          // Limpiamos los event listeners anteriores (si existen)
+          timelineElement.removeEventListener('touchstart', onTouchStart);
+          timelineElement.removeEventListener('touchend', onTouchEnd);
+          
+          // Definimos las funciones para los event listeners
+          function onTouchStart(e) {
+            touchStartX = e.changedTouches[0].screenX;
+          }
+          
+          function onTouchEnd(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+          }
+          
+          // Agregamos los nuevos event listeners
+          timelineElement.addEventListener('touchstart', onTouchStart);
+          timelineElement.addEventListener('touchend', onTouchEnd);
+        }
+      } else {
+        // Restaurar posición en desktop
+        educationCards.forEach(card => {
+          if (card.classList.contains('left')) {
+            card.style.left = '0';
+            card.style.right = 'auto';
+          } else {
+            card.style.right = '0';
+            card.style.left = 'auto';
+          }
+        });
+        
+        // Re-aplicar el active a la tarjeta actual
+        if (educationCards[currentIndex]) {
+          showCard(currentIndex);
+        }
+      }
+    };
+    
+    // Aplicar ajustes iniciales
+    adjustForScreenSize();
+    
+    // Escuchar cambios en el tamaño de la ventana
+    window.addEventListener('resize', adjustForScreenSize);
   });
+
+  
 </script>
