@@ -34,16 +34,20 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: rgba(18, 18, 18, 0.9);
+    background-color: rgba(18, 18, 18, 0.95);
     backdrop-filter: blur(10px);
     padding: 1rem 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
   }
 
   .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
   }
 
   .logo a {
@@ -51,19 +55,36 @@
     font-weight: 700;
     color: var(--primary-color);
     letter-spacing: 1px;
+    transition: color 0.2s ease;
+  }
+  
+  .logo a:hover {
+    color: var(--accent-color);
+  }
+  
+  /* Estilo para el encabezado cuando el menú está activo */
+  .header.menu-active {
+    background: linear-gradient(180deg, rgba(10, 10, 20, 0.98) 0%, rgba(20, 20, 40, 0.95) 100%); /* Degradado vertical */
+    backdrop-filter: blur(15px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
   }
 
   .nav-links {
     display: flex;
     list-style: none;
     gap: 2rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
   }
 
   .nav-links a {
     color: var(--text-color);
     font-weight: 500;
     position: relative;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0.25rem;
+    transition: color 0.2s ease;
+    font-size: 1.05rem;
   }
 
   .nav-links a::after {
@@ -80,28 +101,84 @@
   .nav-links a:hover::after {
     width: 100%;
   }
+  
+  /* Estilos adicionales para el hover en móvil */
+  @media (max-width: 768px) {
+    .nav-links a:hover {
+      background-color: rgba(106, 90, 205, 0.3); /* Color de fondo sutil al hover */
+      color: var(--primary-color); /* Color de texto al hover */
+      transition: all 0.3s ease; /* Transición suave */
+      transform: scale(1.05); /* Ligero zoom al hover */
+    }
+    
+    .nav-links a:active {
+      background-color: var(--primary-color); /* Color de fondo al presionar */
+      color: white; /* Texto blanco al presionar */
+      transform: scale(0.98); /* Ligera reducción de tamaño al hacer clic */
+    }
+    
+    .nav-links a::after {
+      bottom: -2px;
+      height: 3px; /* Línea más gruesa en móvil */
+      background-color: var(--accent-color); /* Color accent para la línea */
+    }
+    
+    /* Añadir íconos a los enlaces del menú para mejor visualización */
+    .nav-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Destacar el enlace activo */
+    .nav-links a.active {
+      color: var(--primary-color);
+      background-color: rgba(106, 90, 205, 0.2);
+      padding-left: 10px;
+      border-left: 3px solid var(--primary-color);
+    }
+  }
 
   .mobile-nav-toggle {
     display: none;
-    background: transparent;
+    background: rgba(30, 30, 50, 0.3);
     border: none;
     cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    z-index: 1000;
+  }
+  
+  .mobile-nav-toggle:hover {
+    background: rgba(40, 40, 70, 0.5);
+  }
+  
+  .mobile-nav-toggle:active {
+    transform: scale(0.95);
   }
 
   .hamburger {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 24px;
-    width: 30px;
+    height: 20px;
+    width: 28px;
+    position: relative;
+    transition: all 0.3s ease;
   }
 
   .hamburger span {
     display: block;
-    height: 3px;
+    height: 2px;
     width: 100%;
     background-color: var(--text-color);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 4px;
+    transform-origin: center;
+  }
+  
+  .hamburger span:nth-child(2) {
+    width: 80%; /* Línea central más corta */
+    align-self: flex-end;
   }
 
   .sr-only {
@@ -115,57 +192,367 @@
     white-space: nowrap;
     border-width: 0;
   }
+  
+  /* Overlay con degradado y desenfoque para fondo cuando el menú está abierto */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(20, 20, 40, 0.7) 100%); /* Degradado sutil */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    z-index: 997;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Estilo para el body cuando el menú está abierto */
+  body.menu-open {
+    overflow: hidden;
+    height: 100%;
+  }
+  
+  /* Estilos adicionales para mejorar la apariencia durante la apertura */
+  body.menu-open .header {
+    box-shadow: none; /* Eliminar sombra del encabezado cuando el menú está abierto */
+  }
+  
+  /* Animación para el logo cuando el menú está abierto */
+  body.menu-open .logo a {
+    color: var(--accent-color);
+    transform: scale(1.05);
+  }
 
   @media (max-width: 768px) {
     .nav-links {
       position: fixed;
-      inset: 0 0 0 30%;
-      background: rgba(18, 18, 18, 0.95);
-      backdrop-filter: blur(1rem);
+      top: 0;
+      right: 0; /* Cambiamos a derecha */
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, #111122 0%, #1a1a3a 100%); /* Degradado elegante */
+      display: flex;
       flex-direction: column;
-      padding: 5rem 2rem;
-      transform: translateX(100%);
-      transition: transform 0.35s ease-out;
+      justify-content: center; /* Centrar verticalmente el contenido */
+      align-items: center; /* Centrar horizontalmente el contenido */
+      padding: 4rem 0; /* Padding equilibrado */
+      transform: translateX(100%); /* Deslizamiento desde la derecha */
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
       z-index: 998;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5); /* Sombra en lado izquierdo */
+      text-align: center;
+      overflow-y: auto; /* Scroll vertical si es necesario */
+      pointer-events: none; /* Evita interacciones cuando está oculto */
     }
 
     .nav-links[data-visible="true"] {
       transform: translateX(0);
+      opacity: 1;
+      pointer-events: all; /* Permitir interacciones cuando está visible */
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Añadir un borde vertical de color y asegurar fondo sólido */
+    .nav-links::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px; /* Ancho del borde */
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+      z-index: 1;
+    }
+    
+    /* Contenedor adicional para asegurar fondo sólido */
+    .nav-links::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #1a1a2e; /* Fondo sólido */
+      z-index: -1;
+    }
+    
+    /* Estilo moderno para los elementos del menú */
+    .nav-links li {
+      margin: 0.7rem 0;
+      width: 85%;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.5s cubic-bezier(0.17, 0.67, 0.21, 0.98);
+    }
+    
+    /* Mostrar elementos cuando el menú está visible */
+    .nav-links[data-visible="true"] li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    /* Aplicar retrasos escalonados para crear un efecto en cascada */
+    .nav-links[data-visible="true"] li:nth-child(1) { 
+      transition-delay: 0.1s; 
+      background: linear-gradient(120deg, rgba(30, 30, 60, 0.7) 0%, rgba(40, 40, 80, 0.7) 100%);
+    }
+    .nav-links[data-visible="true"] li:nth-child(2) { 
+      transition-delay: 0.15s; 
+      background: linear-gradient(120deg, rgba(32, 32, 62, 0.7) 0%, rgba(42, 42, 82, 0.7) 100%);
+    }
+    .nav-links[data-visible="true"] li:nth-child(3) { 
+      transition-delay: 0.2s; 
+      background: linear-gradient(120deg, rgba(34, 34, 64, 0.7) 0%, rgba(44, 44, 84, 0.7) 100%);
+    }
+    .nav-links[data-visible="true"] li:nth-child(4) { 
+      transition-delay: 0.25s; 
+      background: linear-gradient(120deg, rgba(36, 36, 66, 0.7) 0%, rgba(46, 46, 86, 0.7) 100%);
+    }
+    .nav-links[data-visible="true"] li:nth-child(5) { 
+      transition-delay: 0.3s; 
+      background: linear-gradient(120deg, rgba(38, 38, 68, 0.7) 0%, rgba(48, 48, 88, 0.7) 100%);
+    }
+    .nav-links[data-visible="true"] li:nth-child(6) { 
+      transition-delay: 0.35s;
+      background: linear-gradient(120deg, rgba(40, 40, 70, 0.7) 0%, rgba(50, 50, 90, 0.7) 100%);
+    }
+    
+    .nav-links[data-visible="true"] li {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Retraso escalonado para cada elemento */
+    .nav-links[data-visible="true"] li:nth-child(1) { transition-delay: 0.1s; }
+    .nav-links[data-visible="true"] li:nth-child(2) { transition-delay: 0.15s; }
+    .nav-links[data-visible="true"] li:nth-child(3) { transition-delay: 0.2s; }
+    .nav-links[data-visible="true"] li:nth-child(4) { transition-delay: 0.25s; }
+    .nav-links[data-visible="true"] li:nth-child(5) { transition-delay: 0.3s; }
+    .nav-links[data-visible="true"] li:nth-child(6) { transition-delay: 0.35s; }
+
+    .nav-links a {
+      font-size: 1.15rem;
+      padding: 0.9rem 0.8rem;
+      color: #f8f8f8;
+      display: block;
+      width: 100%;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      position: relative;
+      text-transform: uppercase; /* Texto en mayúsculas para mejor apariencia */
+      background: linear-gradient(120deg, rgba(30, 30, 60, 0.7) 0%, rgba(40, 40, 80, 0.7) 100%); /* Degradado sutil */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+      backdrop-filter: blur(10px); /* Efecto de vidrio esmerilado */
+      border-left: 3px solid transparent; /* Borde izquierdo para hover */
+    }
+    
+    .nav-links a:hover {
+      background: linear-gradient(120deg, rgba(70, 60, 160, 0.85) 0%, rgba(90, 80, 180, 0.85) 100%); /* Degradado vibrante */
+      color: var(--primary-color);
+      transform: translateX(5px);
+      border-left: 3px solid var(--primary-color);
+      letter-spacing: 1px; /* Ligero espaciado entre letras al hover */
+      box-shadow: 0 4px 12px rgba(106, 90, 205, 0.25); /* Sombra con color */
+    }
+    
+    .nav-links a:active {
+      background: linear-gradient(120deg, rgba(90, 70, 190, 1) 0%, rgba(110, 90, 210, 1) 100%); /* Degradado más intenso */
+      color: #ffffff;
+      transform: translateX(3px) scale(0.98);
+      border-left: 3px solid var(--accent-color);
+      box-shadow: 0 0 15px rgba(106, 90, 205, 0.4);
+    }
+    
+    /* Estilo para el enlace activo */
+    .nav-links a.active {
+      background: linear-gradient(120deg, rgba(60, 50, 130, 0.9) 0%, rgba(80, 70, 160, 0.9) 100%); /* Degradado distintivo */
+      color: var(--primary-color);
+      border-left: 3px solid var(--primary-color);
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(106, 90, 205, 0.3); /* Sombra sutil */
     }
 
     .mobile-nav-toggle {
       display: block;
       z-index: 999;
+      position: relative;
+    }
+
+    /* Animación moderna del hamburger a X cuando el menú está abierto */
+    .mobile-nav-toggle[aria-expanded="true"] .hamburger span {
+      background-color: var(--primary-color);
+    }
+    
+    .mobile-nav-toggle[aria-expanded="true"] .hamburger span:first-child {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .mobile-nav-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(15px) scale(0.1);
+    }
+
+    .mobile-nav-toggle[aria-expanded="true"] .hamburger span:last-child {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+    
+    /* Animación sutil para el hover del botón hamburguesa */
+    .mobile-nav-toggle:hover .hamburger span {
+      background-color: var(--primary-color);
+    }
+    
+    .mobile-nav-toggle:hover .hamburger span:nth-child(1) {
+      transform: scaleX(0.8) translateY(-1px);
+    }
+    
+    .mobile-nav-toggle:hover .hamburger span:nth-child(2) {
+      transform: scaleX(1.1);
+      width: 100%; /* Hacer que la línea central sea del mismo tamaño al hover */
+    }
+    
+    .mobile-nav-toggle:hover .hamburger span:nth-child(3) {
+      transform: scaleX(0.8) translateY(1px);
     }
   }
 </style>
 
 <script>
-  // Menu móvil toggle
+  // Menu móvil toggle con animación mejorada
   document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.querySelector('.mobile-nav-toggle');
     const nav = document.querySelector('.nav-links');
+    const header = document.querySelector('.header');
+    
+    // Crear un elemento para el overlay de fondo oscuro
+    const overlay = document.createElement('div');
+    overlay.classList.add('menu-overlay');
+    document.body.appendChild(overlay);
 
     if (navToggle && nav) {
+      // Asegurar que todas las opciones del menú sean visibles
+      document.querySelectorAll('.nav-links li').forEach(item => {
+        item.style.visibility = 'visible';
+        item.style.opacity = '1';
+      });
+      
       navToggle.addEventListener('click', () => {
         const visibility = nav.getAttribute('data-visible') === 'true';
+        
+        // Toggle visibilidad del menú
         nav.setAttribute('data-visible', !visibility);
         navToggle.setAttribute('aria-expanded', !visibility);
+        
+        // Mostrar/ocultar overlay y prevenir scroll
+        if (!visibility) {
+          // Abrir menú
+          document.body.style.overflow = 'hidden';
+          overlay.style.opacity = '1';
+          overlay.style.visibility = 'visible';
+          document.body.classList.add('menu-open');
+          
+          // Añadir efecto de desvanecimiento para el header
+          header.classList.add('menu-active');
+          
+          // Asegurarse de que el menú sea visible
+          nav.style.display = 'flex';
+          
+          // Reproducir un sonido sutil de apertura
+          const openSound = new Audio();
+          try {
+            openSound.src = '/sounds/menu-open.mp3';
+            openSound.volume = 0.2;
+            openSound.play();
+          } catch (e) {
+            console.log('Sound not available');
+          }
+        } else {
+          // Cerrar menú
+          document.body.style.overflow = '';
+          overlay.style.opacity = '0';
+          document.body.classList.remove('menu-open');
+          header.classList.remove('menu-active');
+          
+          // Ocultar overlay después de la animación
+          setTimeout(() => {
+            overlay.style.visibility = 'hidden';
+          }, 400);
+          
+          // Reproducir un sonido sutil de cierre
+          const closeSound = new Audio();
+          try {
+            closeSound.src = '/sounds/menu-close.mp3';
+            closeSound.volume = 0.2;
+            closeSound.play();
+          } catch (e) {
+            console.log('Sound not available');
+          }
+        }
       });
     }
+    
+    // Cerrar menú al hacer clic fuera del menú
+    document.addEventListener('click', (e) => {
+      if (nav && nav.getAttribute('data-visible') === 'true' && 
+          !nav.contains(e.target) && 
+          !navToggle?.contains(e.target)) {
+        nav.setAttribute('data-visible', 'false');
+        navToggle?.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.visibility = 'hidden';
+        }, 300);
+      }
+    });
   });
 
-  // Cerrar menú al hacer clic en un enlace
+  // Cerrar menú al hacer clic en un enlace y marcar enlace activo
   const navLinks = document.querySelectorAll('.nav-links a');
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
       const nav = document.querySelector('.nav-links');
       const navToggle = document.querySelector('.mobile-nav-toggle');
       
+      // Cerrar menú en móvil
       if (nav && window.innerWidth <= 768) {
         nav.setAttribute('data-visible', 'false');
         navToggle?.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       }
+      
+      // Marcar enlace como activo
+      navLinks.forEach(item => item.classList.remove('active'));
+      link.classList.add('active');
     });
   });
+  
+  // Función para actualizar el enlace activo basado en la sección visible
+  function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section');
+    const scrollPosition = window.scrollY + 100;
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute('id');
+      
+      if (sectionId && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }
+  
+  // Inicializar y actualizar el enlace activo al hacer scroll
+  document.addEventListener('DOMContentLoaded', updateActiveNavLink);
+  window.addEventListener('scroll', updateActiveNavLink);
 </script>
