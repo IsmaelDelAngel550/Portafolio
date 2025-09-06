@@ -7,7 +7,7 @@
     <p class="section-subtitle">Aprendizaje continuo para desarrollo profesional</p>
     
     <div class="certificates-carousel">
-      <div class="certificate-card">
+      <a href="/certificates/Analista de datos.pdf" download class="certificate-card certificate-link">
         <div class="certificate-front">
           <div class="certificate-image">
             <img src="/images/cursos/Analisis-datos-google.png" alt="Certificación de Análisis de Datos de Google" />
@@ -15,6 +15,12 @@
           <div class="certificate-overlay">
             <h3>Analista de Datos</h3>
             <span class="issuer">Google</span>
+            <div class="download-hint">
+              <svg class="download-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24V305.9l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z"/>
+              </svg>
+              <span>Descargar</span>
+            </div>
           </div>
         </div>
         <div class="certificate-back">
@@ -30,9 +36,9 @@
             <span>Análisis</span>
           </div>
         </div>
-      </div>
+      </a>
       
-      <div class="certificate-card">
+      <a href="/certificates/Desarrollador Back-end_Hernandez Del Angel Jose Ismael.pdf" download class="certificate-card certificate-link">
         <div class="certificate-front">
           <div class="certificate-image">
             <img src="/images/cursos/Desarrollo-backend-aprende.org.png" alt="Curso de Desarrollo Backend" />
@@ -40,6 +46,12 @@
           <div class="certificate-overlay">
             <h3>Desarrollo Backend</h3>
             <span class="issuer">Aprende.org</span>
+            <div class="download-hint">
+              <svg class="download-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24V305.9l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z"/>
+              </svg>
+              <span>Descargar</span>
+            </div>
           </div>
         </div>
         <div class="certificate-back">
@@ -55,9 +67,9 @@
             <span>APIs</span>
           </div>
         </div>
-      </div>
+      </a>
       
-      <div class="certificate-card">
+      <a href="/certificates/Creacion de aplicaciones moviles y de escritorio con .NET MAUI.pdf" download class="certificate-card certificate-link">
         <div class="certificate-front">
           <div class="certificate-image">
             <img src="/images/cursos/Apps-moviles-microsoft.png" alt="Curso de Desarrollo de Aplicaciones Móviles" />
@@ -65,6 +77,12 @@
           <div class="certificate-overlay">
             <h3>Apps Móviles</h3>
             <span class="issuer">Microsoft</span>
+            <div class="download-hint">
+              <svg class="download-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24V305.9l-31 31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31V408z"/>
+              </svg>
+              <span>Descargar</span>
+            </div>
           </div>
         </div>
         <div class="certificate-back">
@@ -80,7 +98,7 @@
             <span>JavaScript</span>
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -143,6 +161,18 @@
     height: 360px;
     perspective: 1000px;
     position: relative;
+  }
+  
+  .certificate-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+  
+  .certificate-link:hover {
+    transform: translateY(-5px);
+    color: inherit;
   }
 
   .certificate-front,
@@ -219,6 +249,14 @@
     display: block;
     margin-top: 0.5rem;
   }
+  
+  .download-hint {
+    display: none; /* Ocultar completamente el indicador de descarga */
+  }
+  
+  .download-icon {
+    display: none; /* También ocultar el icono */
+  }
 
   .certificate-back h4 {
     font-size: 1.5rem;
@@ -291,7 +329,7 @@
 
   @media (max-width: 768px) {
     .certificate-card {
-      width: 260px;
+      width: 320px;
       height: 320px;
     }
     
@@ -302,18 +340,24 @@
     .certificate-back h4 {
       font-size: 1.3rem;
     }
+    
+    /* Efecto de tap en móvil */
+    .certificate-link:active {
+      transform: translateY(-2px) scale(0.98);
+    }
   }
 
   @media (max-width: 480px) {
     .certificates-carousel {
       flex-direction: column;
       align-items: center;
+      padding: 0 1rem;
     }
     
     .certificate-card {
       width: 100%;
-      max-width: 320px;
-      margin-bottom: 1rem;
+      max-width: 350px;
+      margin-bottom: 2rem;
     }
   }
 </style>
