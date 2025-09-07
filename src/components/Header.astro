@@ -502,7 +502,13 @@
           !navToggle?.contains(e.target)) {
         nav.setAttribute('data-visible', 'false');
         navToggle?.setAttribute('aria-expanded', 'false');
+        
+        // Restaurar scroll y limpiar clases
         document.body.style.overflow = '';
+        document.body.classList.remove('menu-open');
+        header?.classList.remove('menu-active');
+        
+        // Ocultar overlay
         overlay.style.opacity = '0';
         setTimeout(() => {
           overlay.style.visibility = 'hidden';
@@ -517,12 +523,26 @@
     link.addEventListener('click', () => {
       const nav = document.querySelector('.nav-links');
       const navToggle = document.querySelector('.mobile-nav-toggle');
+      const overlay = document.querySelector('.menu-overlay');
+      const header = document.querySelector('.header');
       
       // Cerrar menú en móvil
       if (nav && window.innerWidth <= 768) {
         nav.setAttribute('data-visible', 'false');
         navToggle?.setAttribute('aria-expanded', 'false');
+        
+        // Restaurar scroll y limpiar clases
         document.body.style.overflow = '';
+        document.body.classList.remove('menu-open');
+        header?.classList.remove('menu-active');
+        
+        // Ocultar overlay
+        if (overlay) {
+          overlay.style.opacity = '0';
+          setTimeout(() => {
+            overlay.style.visibility = 'hidden';
+          }, 300);
+        }
       }
       
       // Marcar enlace como activo
@@ -555,4 +575,30 @@
   // Inicializar y actualizar el enlace activo al hacer scroll
   document.addEventListener('DOMContentLoaded', updateActiveNavLink);
   window.addEventListener('scroll', updateActiveNavLink);
+  
+  // Función de seguridad para restaurar scroll si se cambia el tamaño de ventana
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      const nav = document.querySelector('.nav-links');
+      const navToggle = document.querySelector('.mobile-nav-toggle');
+      const overlay = document.querySelector('.menu-overlay');
+      const header = document.querySelector('.header');
+      
+      if (nav && nav.getAttribute('data-visible') === 'true') {
+        nav.setAttribute('data-visible', 'false');
+        navToggle?.setAttribute('aria-expanded', 'false');
+        
+        // Restaurar scroll y limpiar clases
+        document.body.style.overflow = '';
+        document.body.classList.remove('menu-open');
+        header?.classList.remove('menu-active');
+        
+        // Ocultar overlay
+        if (overlay) {
+          overlay.style.opacity = '0';
+          overlay.style.visibility = 'hidden';
+        }
+      }
+    }
+  });
 </script>
