@@ -53,13 +53,45 @@
   .logo a {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--primary-color);
     letter-spacing: 1px;
-    transition: color 0.2s ease;
+    transition: all 0.3s ease;
+    background: linear-gradient(
+      45deg,
+      #6A5ACD,
+      #8A2BE2,
+      #9370DB,
+      #6A5ACD,
+      #483D8B,
+      #8A2BE2,
+      #9370DB
+    );
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease-in-out infinite;
+    position: relative;
+  }
+  
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    25% {
+      background-position: 100% 50%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    75% {
+      background-position: 0% 100%;
+    }
   }
   
   .logo a:hover {
-    color: var(--accent-color);
+    animation-duration: 1.5s;
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.5));
   }
   
   /* Estilo para el encabezado cuando el menú está activo */
@@ -221,8 +253,9 @@
   
   /* Animación para el logo cuando el menú está abierto */
   body.menu-open .logo a {
-    color: var(--accent-color);
-    transform: scale(1.05);
+    animation-duration: 2s;
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.7));
   }
 
   @media (max-width: 768px) {
