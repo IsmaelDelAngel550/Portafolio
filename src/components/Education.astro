@@ -87,7 +87,7 @@
   
   .timeline-road {
     position: relative;
-    height: 100px;
+    height: 130px;
     margin-bottom: 50px;
     display: flex;
     align-items: center;
@@ -122,8 +122,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 60px;
-    height: 80px;
+    min-width: 80px;
+    height: 110px;
   }
   
   .milestone-dot {
@@ -197,27 +197,30 @@
   
   .milestone-year {
     position: absolute;
-    top: 45px;
+    top: 100%;
+    margin-top: 15px;
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-color);
     transition: all 0.3s ease;
-    background-color: rgba(18, 18, 18, 0.8);
-    padding: 4px 8px;
+    background-color: rgba(18, 18, 18, 0.9);
+    padding: 6px 12px;
     border-radius: 12px;
     opacity: 1;
-    transform: translateY(0);
     pointer-events: none;
     white-space: nowrap;
     text-align: center;
     left: 50%;
     transform: translateX(-50%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   
   .milestone:hover .milestone-year {
     opacity: 1;
-    background-color: rgba(18, 18, 18, 0.9);
+    background-color: var(--primary-color);
     color: white;
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 90, 205, 0.4);
   }
   
   .milestone-1 {
@@ -608,8 +611,9 @@
     
     .milestone-year {
       font-size: 0.75rem;
-      padding: 3px 6px;
-      top: 35px;
+      padding: 4px 8px;
+      top: 100%;
+      margin-top: 12px;
       white-space: nowrap;
     }
     
@@ -708,8 +712,9 @@
     
     .milestone-year {
       font-size: 0.7rem;
-      padding: 3px 6px;
-      top: 35px; /* Ajustar posición */
+      padding: 4px 8px;
+      top: 100%;
+      margin-top: 10px;
     }
     
     .section-category {
@@ -732,8 +737,9 @@
       line-height: 1.4;
     }
     
-    .milestone-year {
-      font-size: 0.7rem;
+    .section-category {
+      font-size: 1.4rem; /* Reducir tamaño */
+      margin: 1.5rem 0 1rem 0; /* Reducir margen */
     }
     
     .tags {
