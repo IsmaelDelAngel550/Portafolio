@@ -23,20 +23,9 @@
           </p>
           
           <p>
-            Previamente, estudié en el CBTis103 de 2020 a 2023, donde me especialicé en electrónica y obtuve mi cédula profesional, lo que me brindó una sólida base técnica antes de adentrarme completamente en el mundo del desarrollo de software.
-          </p>
-          
-          <p>
             Me apasiona tanto el desarrollo frontend como backend, y he trabajado con frameworks como Laravel, así como bases de datos SQL Server y MySQL. Actualmente estoy ampliando mis habilidades en frameworks y librerías modernas como Astro, React y Vue.
           </p>
           
-          <p>
-            Además de mi formación académica, cuento con un curso de Analista de Datos de Google y varios cursos adicionales de aprende.org relacionados con programación orientada a objetos, desarrollo backend y redes de telecomunicaciones. También manejo herramientas de administración de proyectos como Jira y Notion.
-          </p>
-          
-          <p>
-            Actualmente, mi idioma principal es el español, pero estoy en proceso de aprendizaje del inglés para ampliar mis oportunidades profesionales en el ámbito global de la tecnología.
-          </p>
         </div>
       </div>
       
@@ -110,7 +99,7 @@
               <h4>Educación:</h4>
             </div>
             <div class="info-card-body">
-              <p>Ingeniería en Sistemas Computacionales (En curso) - UAT</p>
+              <p>Ingeniería en Sistemas Computacionales - UAT</p>
             </div>
           </div>
 
@@ -124,7 +113,8 @@
               <h4>Idiomas:</h4>
             </div>
             <div class="info-card-body">
-              <p>Español (Nativo), Inglés (En proceso)</p>
+              <p>Español</p>
+              <p>Inglés</p>
             </div>
           </div>
         </div>
@@ -291,7 +281,7 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(106, 90, 205, 0.2);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 2.5rem; /* Aumentado de 2rem a 2.5rem */
     box-shadow: 
       0 10px 30px rgba(0, 0, 0, 0.15),
       0 0 20px rgba(106, 90, 205, 0.1),
@@ -299,6 +289,9 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
+    min-height: 500px; /* Altura mínima para asegurar espacio suficiente */
+    width: calc(100% + 2rem); /* Hacer el contenedor 2rem más ancho */
+    margin-left: -1rem; /* Centrar el contenedor expandido */
   }
 
   .about-info-container::before {
@@ -342,7 +335,8 @@
   .info-cards {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem; /* Aumentado de 1rem a 1.5rem para más espacio */
+    margin-top: 1rem; /* Espacio adicional desde el título */
   }
 
   .info-card {
@@ -352,11 +346,12 @@
     backdrop-filter: blur(5px);
     border: 1px solid rgba(106, 90, 205, 0.15);
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1.3rem; /* Aumentado de 1rem a 1.3rem para más espacio interno */
     transition: all 0.3s ease;
     border-left: 3px solid var(--accent-color);
     position: relative;
     overflow: hidden;
+    /* Remover min-width para permitir flexibilidad */
   }
   
   .info-card::before {
@@ -418,8 +413,13 @@
 
   .info-card-body p {
     margin: 0;
-    padding-left: 34px; /* Alineado con el texto del encabezado */
-    font-size: 0.95rem;
+    padding-left: 8px; /* Reducido aún más para dar más espacio al email */
+    font-size: 0.9rem; /* Reducido ligeramente para que el email quepa mejor */
+    word-break: normal; /* Cambiar a normal para evitar ruptura innecesaria */
+    overflow-wrap: normal; /* Normal en desktop para mantener el email en una línea */
+    white-space: nowrap; /* Evitar que el texto se rompa en múltiples líneas */
+    overflow: hidden; /* Ocultar overflow si es necesario */
+    text-overflow: ellipsis; /* Mostrar ... si el texto es muy largo */
   }
 
   .info-value {
@@ -429,12 +429,89 @@
   @media (min-width: 768px) {
     .info-cards {
       grid-template-columns: repeat(2, 1fr);
+      gap: 1.8rem; /* Más espacio entre tarjetas en desktop */
+      max-width: 100%; /* Asegurar que no se desborde */
+    }
+    
+    .info-card {
+      /* Remover min-width fijo para permitir flexibilidad */
+      width: 100%; /* Usar todo el espacio disponible del grid */
+      padding: 1.5rem; /* Más padding en desktop */
+    }
+    
+    .info-card-body p {
+      white-space: normal; /* Permitir wrap normal en desktop */
+      overflow: visible; /* Mostrar todo el contenido */
+      text-overflow: initial; /* No usar ellipsis en desktop */
+      font-size: 0.95rem; /* Tamaño normal en desktop */
+      padding-left: 8px; /* Padding moderado para mejor legibilidad */
+    }
+    
+    .about-info-container {
+      padding: 3rem; /* Más padding en desktop */
+      min-height: 550px; /* Altura mínima mayor en desktop */
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .info-card-body p {
+      padding-left: 4px; /* Padding mínimo en móvil para máximo espacio */
+      font-size: 0.9rem; /* Texto ligeramente más pequeño en móvil */
+    }
+    
+    .info-card {
+      padding: 0.6rem; /* Reducir aún más el padding de la tarjeta en móvil */
     }
   }
 
   @media (min-width: 992px) {
     .about-content {
-      grid-template-columns: 1.5fr 1fr;
+      grid-template-columns: 1.3fr 1.2fr; /* Más equilibrado: más ancho para el texto "Sobre Mí" */
+    }
+    
+    .about-info-container {
+      max-width: none; /* Permitir que use todo el ancho disponible */
+      width: calc(100% + 3rem); /* Más ancho en desktop */
+      margin-left: -1.5rem; /* Centrar el contenedor expandido */
+    }
+    
+    .about-text {
+      padding: 2.5rem; /* Más padding para aprovechar el espacio adicional */
+    }
+    
+    .about-details p {
+      font-size: 1.1rem; /* Texto ligeramente más grande */
+      line-height: 1.7; /* Mejor espaciado entre líneas */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .about-content {
+      grid-template-columns: 1.4fr 1.3fr; /* Proporción más equilibrada en pantallas grandes */
+      gap: 4rem; /* Más separación entre columnas */
+    }
+    
+    .about-text {
+      padding: 3rem; /* Aún más padding en pantallas grandes */
+    }
+    
+    .about-intro {
+      font-size: 1.7rem; /* Título más grande */
+    }
+    
+    .about-details p {
+      font-size: 1.15rem; /* Texto más grande para mejor legibilidad */
+      line-height: 1.8; /* Espaciado óptimo entre líneas */
+    }
+    
+    .about-info-container {
+      padding: 3.5rem; /* Más padding horizontal en pantallas grandes */
+      width: calc(100% + 4rem); /* Aún más ancho en pantallas muy grandes */
+      margin-left: -2rem; /* Centrar el contenedor expandido */
+    }
+    
+    .info-cards {
+      gap: 2rem; /* Más espacio entre tarjetas en pantallas grandes */
     }
   }
 </style>
