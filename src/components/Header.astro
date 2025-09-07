@@ -55,36 +55,27 @@
     font-weight: 700;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    background: linear-gradient(
-      45deg,
-      #6A5ACD,
-      #8A2BE2,
-      #9370DB,
-      #6A5ACD,
-      #483D8B,
-      #8A2BE2,
-      #9370DB
+    background: linear-gradient(90deg, 
+      #6A5ACD 0%, 
+      #8A2BE2 25%, 
+      #9370DB 50%, 
+      #8A2BE2 75%, 
+      #6A5ACD 100%
     );
-    background-size: 400% 400%;
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 4s ease-in-out infinite;
+    animation: textGradientFlow 3s ease-in-out infinite;
     position: relative;
   }
   
-  @keyframes gradientShift {
+  @keyframes textGradientFlow {
     0%, 100% {
-      background-position: 0% 50%;
-    }
-    25% {
-      background-position: 100% 50%;
+      background-position: 0% center;
     }
     50% {
-      background-position: 100% 100%;
-    }
-    75% {
-      background-position: 0% 100%;
+      background-position: 100% center;
     }
   }
   
