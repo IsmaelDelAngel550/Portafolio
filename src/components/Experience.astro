@@ -1,5 +1,21 @@
 ---
 import Education from "./Education.astro";
+
+// Función para obtener proyectos desde Strapi
+async function fetchProjects() {
+  try {
+    const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
+    const response = await fetch(`${STRAPI_URL}/api/proyectos?populate=*`);
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    return [];
+  }
+}
+
+// Obtener proyectos desde Strapi
+const projects = await fetchProjects();
 ---
 
 <section id="experiencia" class="experience">
@@ -12,69 +28,86 @@ import Education from "./Education.astro";
       <h3 class="section-category">Experiencia Profesional</h3>
       
       <div class="experience-cards">
-        <div class="experience-card">
-          <div class="experience-image">
-            <img src="/images/proyectos/clinica-miel.png" alt="Clínica de Rehabilitación" />
-            <div class="experience-overlay"></div>
-          </div>
-          <div class="experience-content">
-            <span class="date">2025</span>
-            <h4 class="title">Desarrollo de Sitio Web para Clínica de Rehabilitación</h4>
-            <p class="description">
-              Trabajé en equipo para desarrollar un sitio web completo para una clínica de rehabilitación, 
-              enfocado en la reservación de citas. El proyecto incluyó el diseño de interfaz de usuario, 
-              implementación de sistema de reservas y gestión de base de datos.
-            </p>
-            <div class="experience-footer">
-              <div class="project-links">
-                <a href="https://github.com/JuanCarlos0511/proyecto_udm" class="project-link" target="_blank" rel="noopener noreferrer">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                  </svg>
-                  GitHub
-                </a>
+        {projects.length > 0 ? (
+          projects.map((project) => (
+            <div class="experience-card">
+              <div class="experience-image">
+                <img 
+                  src={project.imagen_principal?.url ? `${import.meta.env.STRAPI_URL || 'http://localhost:1337'}${project.imagen_principal.url}` : "/images/proyectos/default.png"} 
+                  alt={project.titulo} 
+                />
+                <div class="experience-overlay"></div>
               </div>
-              <div class="tags">
-                <span class="tag">HTML/CSS</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">PHP</span>
-                <span class="tag">MySQL</span>
+              <div class="experience-content">
+                <span class="date">{project.ano_creacion || new Date(project.createdAt).getFullYear() || new Date().getFullYear()}</span>
+                <h4 class="title">{project.titulo}</h4>
+                <p class="description">
+                  {project.descripcion}
+                </p>
+                <div class="experience-footer">
+                  <div class="project-links">
+                    {project.enlace_github && (
+                      <a href={project.enlace_github} class="project-link" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        GitHub
+                      </a>
+                    )}
+                    {project.enlace_demo && (
+                      <a href={project.enlace_demo} class="project-link demo-link" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                          <polyline points="15,3 21,3 21,9"></polyline>
+                          <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        Demo
+                      </a>
+                    )}
+                  </div>
+                  <div class="tags">
+                    {project.tecnologias && project.tecnologias.map((tech) => (
+                      <span class="tag">{tech}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <!-- Fallback content if no projects are available -->
+          <div class="experience-card">
+            <div class="experience-image">
+              <img src="/images/proyectos/clinica-miel.png" alt="Clínica de Rehabilitación" />
+              <div class="experience-overlay"></div>
+            </div>
+            <div class="experience-content">
+              <span class="date">2025</span>
+              <h4 class="title">Desarrollo de Sitio Web para Clínica de Rehabilitación</h4>
+              <p class="description">
+                Trabajé en equipo para desarrollar un sitio web completo para una clínica de rehabilitación, 
+                enfocado en la reservación de citas. El proyecto incluyó el diseño de interfaz de usuario, 
+                implementación de sistema de reservas y gestión de base de datos.
+              </p>
+              <div class="experience-footer">
+                <div class="project-links">
+                  <a href="https://github.com/JuanCarlos0511/proyecto_udm" class="project-link" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    GitHub
+                  </a>
+                </div>
+                <div class="tags">
+                  <span class="tag">HTML/CSS</span>
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">PHP</span>
+                  <span class="tag">MySQL</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div class="experience-card">
-          <div class="experience-image">
-            <img src="/images/proyectos/punto-venta.png" alt="Sistema de Punto de Venta" />
-            <div class="experience-overlay"></div>
-          </div>
-          <div class="experience-content">
-            <span class="date">2024</span>
-            <h4 class="title">Desarrollo de Punto de Venta</h4>
-            <p class="description">
-              Desarrollé un sistema de punto de venta completo utilizando Java, SQL, librerías específicas 
-              de Java y JasperReport para la generación de informes. El sistema incluye gestión de inventario, 
-              procesamiento de ventas y emisión de recibos.
-            </p>
-            <div class="experience-footer">
-              <div class="project-links">
-                <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                  </svg>
-                  GitHub
-                </a>
-              </div>
-              <div class="tags">
-                <span class="tag">Java</span>
-                <span class="tag">SQL</span>
-                <span class="tag">JasperReport</span>
-                <span class="tag">Desktop</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
     
@@ -352,6 +385,15 @@ import Education from "./Education.astro";
   
   .experience-card:nth-child(2) {
     animation-delay: 0.3s;
+  }
+
+  .demo-link {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  }
+
+  .demo-link:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    transform: translateY(-2px);
   }
 </style>
 
